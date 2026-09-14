@@ -4,9 +4,34 @@ import Footer from "../components/Footer";
 
 import Modal from "../components/Modal";
 
+interface selectedTicket{
+  name: string;
+  price: string;
+}
+
 const Tickets: React.FC = () => {
 
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+     const [selectedTicket, setSelectedTicket] = useState<selectedTicket | null>(null);
+
+     const openCheckout = (ticketName: string, ticketPrice: string): void => {
+    setSelectedTicket({ name: ticketName, price: ticketPrice });
+    setIsModalOpen(true);
+  };
+
+ const closeCheckout = (): void => {
+    setIsModalOpen(false);
+    setSelectedTicket(null);
+  };
+
+  const handleCheckoutSubmit = (e: React.SubmitEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+    alert('¡Gracias por registrarte! En un entorno real serías redirigido a la pasarela de pago (Webpay/Stripe).');
+    closeCheckout();
+  };
+
+
    
   return (
     <>
@@ -71,7 +96,7 @@ const Tickets: React.FC = () => {
                   </li>
                 </ul>
               </div>
-              <button onClick={() => setIsModalOpen(true)} className="w-full bg-slate-800 hover:bg-slate-700 text-white font-medium py-3 rounded-xl border border-slate-700 transition duration-200">
+              <button onClick={() => openCheckout('Community Pass', '$45.000 CLP')} className="w-full bg-slate-800 hover:bg-slate-700 text-white font-medium py-3 rounded-xl border border-slate-700 transition duration-200">
                 Comprar Community
               </button>
             </div>
@@ -118,7 +143,7 @@ const Tickets: React.FC = () => {
                   </li>
                 </ul>
               </div>
-              <button className="w-full bg-gradient-to-r from-cyan-500 to-violet-600 hover:from-cyan-400 hover:to-violet-500 text-slate-950 font-bold py-3 rounded-xl shadow-lg shadow-cyan-500/20 transition duration-200">
+              <button onClick={() => openCheckout('Pro Conference Pass', '$85.000 CLP')} className="w-full bg-gradient-to-r from-cyan-500 to-violet-600 hover:from-cyan-400 hover:to-violet-500 text-slate-950 font-bold py-3 rounded-xl shadow-lg shadow-cyan-500/20 transition duration-200">
                 Comprar Pase General
               </button>
             </div>
@@ -162,21 +187,20 @@ const Tickets: React.FC = () => {
                   </li>
                 </ul>
               </div>
-              <button className="w-full bg-slate-800 hover:bg-slate-700 text-white font-medium py-3 rounded-xl border border-slate-700 transition duration-200">
+              <button onClick={() => openCheckout('VIP + Workshop Pass', '$150.000 CLP')} className="w-full bg-slate-800 hover:bg-slate-700 text-white font-medium py-3 rounded-xl border border-slate-700 transition duration-200">
                 Comprar VIP
               </button>
             </div>
           </div>
         </div>
       </section>
-
-      <Modal
-      isOpen={isModalOpen}
-      onClose={() => setIsModalOpen(false)}
-      title="Completar Compra"
+      <Modal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        title="Completar Compra"
       >
-        <p className="text-sm text-slate-400 mb-6">Estás adquiriendo: <span id="modal-ticket-name" className="text-cyan-400 font-semibold" /> (<span id="modal-ticket-price" className="text-white font-semibold" />)</p>
-    <form  className="space-y-4">
+       <p className="text-sm text-slate-400 mb-6">Estás adquiriendo: <span className="text-cyan-400 font-semibold">{selectedTicket?.name}</span> (<span className="text-white font-semibold">{selectedTicket?.price}</span>)</p>
+    <form onSubmit={handleCheckoutSubmit}  className="space-y-4">
       <div>
         <label className="block text-xs font-semibold text-slate-300 mb-1">Nombre Completo</label>
         <input type="text" required placeholder="Ej: Luis Morales" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyan-500" />
@@ -198,8 +222,8 @@ const Tickets: React.FC = () => {
         </button>
       </div>
     </form>
- <button onClick={() => setIsModalOpen(false)}>Cerrar</button>
       </Modal>
+     
        
       <Footer />
     </>

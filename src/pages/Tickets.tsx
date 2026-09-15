@@ -9,11 +9,32 @@ interface selectedTicket{
   price: string;
 }
 
+interface FormData{
+  nombre: string;
+  email: string;
+  empresa: string;
+}
+
 const Tickets: React.FC = () => {
 
      const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
      const [selectedTicket, setSelectedTicket] = useState<selectedTicket | null>(null);
+
+     const [form, setForm] = useState<FormData>({
+    nombre: '',
+    email: '',
+    empresa: '',
+    });
+
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
 
      const openCheckout = (ticketName: string, ticketPrice: string): void => {
     setSelectedTicket({ name: ticketName, price: ticketPrice });
@@ -29,6 +50,7 @@ const Tickets: React.FC = () => {
     e.preventDefault();
     alert('¡Gracias por registrarte! En un entorno real serías redirigido a la pasarela de pago (Webpay/Stripe).');
     closeCheckout();
+    console.log('Datos enviados:', form);
   };
 
 
@@ -203,15 +225,15 @@ const Tickets: React.FC = () => {
     <form onSubmit={handleCheckoutSubmit}  className="space-y-4">
       <div>
         <label className="block text-xs font-semibold text-slate-300 mb-1">Nombre Completo</label>
-        <input type="text" required placeholder="Ej: Luis Morales" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyan-500" />
+        <input type="text" name="nombre" value={form.nombre} onChange={handleChange} required placeholder="Ej: Luis Morales" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyan-500" />
       </div>
       <div>
         <label className="block text-xs font-semibold text-slate-300 mb-1">Correo Electrónico</label>
-        <input type="email" required placeholder="tu@email.com" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyan-500" />
+        <input type="email" name="email" value={form.email} onChange={handleChange} required placeholder="tu@email.com" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyan-500" />
       </div>
       <div>
         <label className="block text-xs font-semibold text-slate-300 mb-1">Empresa / Organización (Opcional)</label>
-        <input type="text" placeholder="Ej: Tech Company" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyan-500" />
+        <input type="text" name="empresa" value={form.empresa} onChange={handleChange} placeholder="Ej: Tech Company" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyan-500" />
       </div>
       <div className="pt-4 border-t border-slate-800 flex justify-end gap-3">
         <button type="button" className="px-4 py-2.5 rounded-lg border border-slate-800 text-sm text-slate-300 hover:bg-slate-800">

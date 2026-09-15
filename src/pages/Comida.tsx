@@ -1,5 +1,7 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUtensils, faBurger, faStore } from '@fortawesome/free-solid-svg-icons'
 
 function Comida() {
   return (
@@ -14,7 +16,7 @@ function Comida() {
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800">
-            <i className="fa-solid fa-utensils text-2xl text-cyan-400 mb-3" />
+            <FontAwesomeIcon className="text-2xl text-cyan-400 mb-3" icon={faUtensils} />
             <h3 className="text-xl font-bold text-white">Catering Incluido</h3>
             <p className="text-slate-400 text-sm mt-2">
               Coffee breaks am/pm, almuerzo buffet con alternativas Veganas,
@@ -22,7 +24,7 @@ function Comida() {
             </p>
           </div>
           <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800">
-            <i className="fa-solid fa-burger text-2xl text-violet-400 mb-3" />
+            <FontAwesomeIcon className="text-2xl text-violet-400 mb-3" icon={faBurger} />
             <h3 className="text-xl font-bold text-white">Food Trucks Zone</h3>
             <p className="text-slate-400 text-sm mt-2">
               Ubicados en el patio exterior del evento con opciones de comida
@@ -30,6 +32,7 @@ function Comida() {
             </p>
           </div>
           <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800">
+            <FontAwesomeIcon className="text-2xl text-emerald-400 mb-3" icon={faStore} />
             <i className="fa-solid fa-store text-2xl text-emerald-400 mb-3" />
             <h3 className="text-xl font-bold text-white">
               Restaurantes Cercanos

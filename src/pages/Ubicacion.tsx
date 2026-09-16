@@ -1,7 +1,12 @@
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-function Ubicacion() {
+import { APIProvider, Map } from '@vis.gl/react-google-maps';
+import type React from "react";
+
+const API_KEY = 'AIzaSyCY_kxeScyVUrqpB9J-rj8jrDliLZhh8CA'; // Reemplaza con tu clave de API
+
+const Ubicacion: React.FC = () => {
   return (
     <>
       <Header />
@@ -22,12 +27,17 @@ function Ubicacion() {
             <p className="text-slate-400 mt-2">
               Av. Vitacura 2670, Santiago, Las Condes, Chile.
             </p>
-            <div className="mt-6 h-64 bg-slate-800 rounded-xl overflow-hidden relative flex items-center justify-center border border-slate-700">
-              <span className="text-slate-500">
-                <i className="fa-solid fa-map-pin text-red-500 mr-2" />{" "}
-                Interactive Map Loaded via CMS
-              </span>
-            </div>
+              <APIProvider apiKey={API_KEY}>
+              {/* Contenedor del mapa con alto fijo (h-64) y overflow-hidden para respetar los bordes redondeados */}
+              <div className="mt-6 h-64 bg-slate-800 rounded-xl border border-slate-700 overflow-hidden">
+                <Map
+                  defaultCenter={{ lat: -33.4145, lng: -70.6038 }} // Coordenadas aproximadas de Vitacura/Las Condes
+                  defaultZoom={14}
+                  gestureHandling={'greedy'}
+                  fullscreenControl={true}
+                />
+              </div>
+            </APIProvider>
           </div>
           {/* Hotels */}
           <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6">
